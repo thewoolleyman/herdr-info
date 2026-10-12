@@ -166,6 +166,29 @@ memory directory was found there. Local global memory included an older Herdr
 installation/workspace observation; current filesystem and version checks take
 precedence over that observation.
 
+## Test-created workspace pollution (2026-10-12)
+
+Read-only inspection of the VPS default session found 70 workspaces labelled
+`topic` and four labelled `supervisor`, each containing one pane whose cwd was a
+deleted pytest temporary repository. These are separate workspaces; `fabro`
+itself held five panes. A sampled leftover pane had only its retained zsh shell
+in the foreground. No leftover workspace or live session was closed.
+
+The matching tests belong to `livespec-overseer`, plan `herdr-overseer`, anchored
+by epic `overseer-uzvcbn` (Support herdr and tmux overseer panes with verified
+automatic selection). The initial-start implementation is owned by child
+`overseer-zbpqnj` (Exact owned-pane initial start and uncertain-launch preservation).
+Its public start path now detects the invoking process's terminal through real
+ancestry and selects a native Herdr driver. Several legacy CLI tests substitute
+only `TmuxIO`; their setup changes cwd and installs a fake Claude executable but
+does not substitute the native ownership/router boundary. This provides a mechanism
+for tests run from a Herdr-owned process to create real `topic` workspaces despite
+the tmux fake, consistent with the observed leftovers. A controlled reproduction
+was not run during this investigation. The plan's live-verification research already requires isolated named
+sessions and cleanup; ordinary unit-suite isolation must enforce the same
+production-session protection. Clearing environment selectors alone is
+insufficient because backend selection uses process ancestry.
+
 ## Open checks
 
 - Verify Android key authentication and interactive Herdr rendering on the device.
