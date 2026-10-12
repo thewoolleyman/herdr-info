@@ -42,6 +42,22 @@ start new agent sessions in its new path.
   for width or **j/k** for height; **Esc** exits. This is pane resizing, not
   sidebar resizing ([upstream README](https://github.com/motionharvest/herdr)).
 
+## Workspace sidebar branch selection
+
+Verified on 2026-10-12 against the
+[v0.9.3 workspace source](https://github.com/herdrdev/herdr/blob/v0.9.3/src/workspace.rs)
+and Git refresh implementation: the workspace's Git identity uses the current
+working directory of the **root pane in the first tab in current tab order**.
+If that directory cannot be resolved, it falls back to the workspace's stored
+identity directory. The sidebar branch is cached Git information for that
+directory; it does not aggregate repositories across tabs or follow the selected
+tab. Reordering or closing the first tab can therefore change which repository
+supplies the branch after refresh. Changing the root pane's directory can also
+change it. These directories belong to the host running the panes, even when the
+client UI runs on another machine. A read-only inspection of the VPS `livespec`
+workspace found its first tab's pane in the `livespec-overseer` repository, whose
+branch was `master` at inspection time.
+
 ## Sidebar width configuration
 
 On 2026-10-10, changing the VPS config's `ui.sidebar_width` from the default 26
@@ -106,6 +122,20 @@ See also [status concepts](https://herdr.dev/docs/concepts/).
 
 ## Pane text selection
 
+For iTerm2 intercepting right-clicks on Herdr tabs, check **Settings → Profiles →
+active profile → Terminal** and enable **Enable mouse reporting** and
+**Report mouse clicks & drags**. The
+[iTerm2 Terminal profile documentation](https://iterm2.com/documentation-preferences-profiles-terminal.html)
+verified on 2026-10-12 confirms that disabling click/drag reporting makes mouse
+buttons perform iTerm2's default action instead of reporting them to an app.
+Holding Option temporarily disables mouse reporting. Apply these settings in
+iTerm2 on the Mac, regardless of which host owns the Herdr session. The user
+reported that this advice did not resolve right-click tab renaming on 2026-10-12
+and chose the keyboard shortcut instead. The actual settings and delivered mouse
+events were not inspected; do not treat the documented options as a verified fix.
+Rename the current tab with **Ctrl+B, release, then Shift+T**, type its name,
+and press **Enter**.
+
 Checked against local default config and public docs on 2026-10-08:
 `[ui] mouse_capture = true` enables Herdr mouse handling; `copy_on_select = true`
 copies its selection automatically. Both default to true. Reload edited config
@@ -127,6 +157,15 @@ Discover IDs with `herdr workspace list` and `herdr pane list` on the host/sessi
 that owns the work. This moves a running pane into a new destination tab; it does
 not transfer a whole split layout. See the
 [CLI reference](https://herdr.dev/docs/cli-reference/).
+
+Verified on 2026-10-12 while regrouping single-pane tabs by repository: adding
+`--no-focus` to the move command preserves user focus. Moves append destination
+tabs; processing source tabs in order preserves their relative order after the
+destination's existing tabs. Workspace-qualified pane and tab IDs change, while
+terminal IDs remain stable. Moving the last pane out automatically removes the
+empty source workspace. Verification of 14 moves confirmed stable terminal IDs,
+tab labels and order, and unchanged existing destination tabs and unrelated
+workspaces.
 
 ## Android
 
