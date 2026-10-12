@@ -7,6 +7,15 @@ A host can run independent Herdr server sessions. Each session owns spaces
 Agent and pane IDs are scoped to their server. Saved machine profiles target one
 session, not all sessions on a host. A client can display multiple machines.
 
+## Repository name and checkout locations
+
+On 2026-10-12 the repository was renamed from `herdr-test` to `herdr-info`.
+The current GitHub remote is `https://github.com/thewoolleyman/herdr-info.git`.
+The VPS checkout is `/data/projects/herdr-info`; the Mac checkout is
+`~/workspace/herdr-info`. Older `herdr-test` paths below and in conversation
+exports describe historical locations. After a checkout directory is renamed,
+start new agent sessions in its new path.
+
 ## Findings from both conversations
 
 - Use plain `herdr` on the Mac plus `herdr machine add vps` for a combined view.

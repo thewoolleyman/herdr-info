@@ -38,7 +38,8 @@ remains operational. Detaching does not exit an enclosing SSH shell.
 
 ## Working copies
 
-Clone this repository under `~/workspace/herdr-test` on each machine. Commit and
+The GitHub repository is [thewoolleyman/herdr-info](https://github.com/thewoolleyman/herdr-info).
+Clone it under `~/workspace/herdr-info` on each machine. Commit and
 push changes from one clone, then pull them in the other. Git synchronizes these
 notes; it does not move running Herdr panes, agents, or Codex session databases.
 
