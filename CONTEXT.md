@@ -42,6 +42,25 @@ start new agent sessions in its new path.
   for width or **j/k** for height; **Esc** exits. This is pane resizing, not
   sidebar resizing ([upstream README](https://github.com/motionharvest/herdr)).
 
+### Sidebar toggle when nested in tmux
+
+Verified on 2026-10-16 with Herdr 0.9.3 and tmux 3.5a in a disposable tmux
+server and isolated Herdr config/runtime/session. With default bindings:
+
+- Direct Herdr input: **Ctrl+B, release, then lowercase b** toggles the sidebar.
+- Herdr inside tmux: **Ctrl+B, Ctrl+B, release Ctrl, then lowercase b**.
+  tmux consumes the first Ctrl+B; its `send-prefix` binding forwards the second
+  Ctrl+B to Herdr. One Ctrl+B followed by b did not toggle Herdr in this setup.
+- Uppercase **B** did not toggle it. The collapsed sidebar remained a narrow
+  strip; it did not disappear completely.
+
+Captured terminal rendering verified collapse and restoration using the doubled
+prefix, and direct pane input verified the single-prefix Herdr binding. Custom
+prefixes or additional nesting layers need separate checks. The first test was
+blocked by fresh-config onboarding; the successful test used `onboarding = false`.
+Only disposable test servers were stopped. Existing user sessions were untouched.
+See the [keyboard reference](https://herdr.dev/docs/keyboard/).
+
 ## Workspace sidebar branch selection
 
 Verified on 2026-10-12 against the
