@@ -184,7 +184,7 @@ uses that pair, as does the
 [Herdr Web UI v0.4.6 release](https://github.com/devswha/herdr-web-ui/releases/tag/v0.4.6).
 These are concrete examples, not evidence of a universal community convention.
 
-For Termux toolbar use, recommend prefix followed by an unmodified arrow:
+For Termux toolbar use, the user adopted prefix followed by an unmodified arrow:
 
 ```toml
 [keys]
@@ -192,10 +192,27 @@ move_tab_previous = "prefix+left"
 move_tab_next = "prefix+right"
 ```
 
-The inspected VPS config had no key overrides; the default prefix Left/Right
+The pre-change VPS config had no key overrides; the default prefix Left/Right
 slots are free (pane focus uses prefix h/l). A temporary config containing these
 bindings passed the installed `herdr config check` with `config: ok`, exit 0.
-This recommendation was not applied to the live config or tested interactively.
+After user approval on 2026-10-16, these bindings were applied to the VPS client
+config and reloaded successfully with no diagnostics. The idempotent installer
+and fragment live in the private VPS configuration repo (`9c9930a`); it manages
+only these two keys, backs up changed config locally, and validates preservation
+of all other parsed settings. A second installer run made no changes.
+
+The Android configuration repo (`dda9a0e`) adds a Termux toolbar `PREFIX` macro
+that sends `CTRL b`. The user clarified that the original request for Shift+B
+meant Control+B. Tap PREFIX, then LEFT/RIGHT; swipe up on PREFIX to access `/`.
+The toolbar was installed and reloaded; a second run was unchanged. Actual
+touchscreen rendering/tapping remains unverified.
+
+A disposable Herdr client inside an isolated tmux server verified the keys:
+starting order `1, Second, Third`, prefix+Left moved the focused Third tab before
+Second, and prefix+Right restored the original order. The test forwarded the
+tmux prefix with two Ctrl+B strokes before each arrow. Only test servers were
+stopped; existing user tabs and sessions were not used for the test.
+
 Bare arrows should remain available to shell/editor/agent cursor movement.
 Herdr also uses them within navigation and resize modes; those modal bindings
 are separate from prefix actions. See
