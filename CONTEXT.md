@@ -173,6 +173,36 @@ See [config reference](https://herdr.dev/docs/config-reference/) and
 
 ## Moving terminal work between workspaces
 
+### Reordering tabs within a workspace
+
+Correction verified 2026-10-16: lack of a `herdr tab move` CLI command does not
+mean keyboard reordering is unavailable. The installed Herdr 0.9.3
+`--default-config` exposes `move_tab_previous` and `move_tab_next`, both unbound
+by default, with examples `alt+shift+left` and `alt+shift+right`. The
+[Omarchy quattro config](https://github.com/omacom/omarchy/blob/quattro/config/herdr/config.toml)
+uses that pair, as does the
+[Herdr Web UI v0.4.6 release](https://github.com/devswha/herdr-web-ui/releases/tag/v0.4.6).
+These are concrete examples, not evidence of a universal community convention.
+
+For Termux toolbar use, recommend prefix followed by an unmodified arrow:
+
+```toml
+[keys]
+move_tab_previous = "prefix+left"
+move_tab_next = "prefix+right"
+```
+
+The inspected VPS config had no key overrides; the default prefix Left/Right
+slots are free (pane focus uses prefix h/l). A temporary config containing these
+bindings passed the installed `herdr config check` with `config: ok`, exit 0.
+This recommendation was not applied to the live config or tested interactively.
+Bare arrows should remain available to shell/editor/agent cursor movement.
+Herdr also uses them within navigation and resize modes; those modal bindings
+are separate from prefix actions. See
+[configuration semantics](https://herdr.dev/docs/configuration/#keybindings).
+
+### Moving panes between workspaces
+
 Local Herdr 0.9.3 help checked on 2026-10-06 exposes no `herdr tab move`
 subcommand. The supported CLI workaround for a single-pane tab is
 `herdr pane move <pane_id> --new-tab --workspace <workspace_id> --label <name>`.
