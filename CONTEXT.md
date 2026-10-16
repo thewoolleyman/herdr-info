@@ -44,6 +44,10 @@ start new agent sessions in its new path.
 
 ### Sidebar toggle when nested in tmux
 
+The user subsequently clarified on 2026-10-16 that the failed sidebar attempt
+used **x** instead of **b**. This explains the reported failure; the tmux behavior
+below is a separate controlled finding, not the established cause of that incident.
+
 Verified on 2026-10-16 with Herdr 0.9.3 and tmux 3.5a in a disposable tmux
 server and isolated Herdr config/runtime/session. With default bindings:
 
