@@ -11,8 +11,9 @@ session, not all sessions on a host. A client can display multiple machines.
 
 On 2026-10-12 the repository was renamed from `herdr-test` to `herdr-info`.
 The current GitHub remote is `https://github.com/thewoolleyman/herdr-info.git`.
-The VPS checkout is `/data/projects/herdr-info`; the Mac checkout is
-`~/workspace/herdr-info`. Older `herdr-test` paths below and in conversation
+The checkout on every host is `~/workspace/herdr-info`. `~/workspace` is the
+canonical home for project clones; on a host whose data disk lives elsewhere,
+such as the VPS, `~/workspace` is a symlink to that location. Older `herdr-test` paths below and in conversation
 exports describe historical locations. After a checkout directory is renamed,
 start new agent sessions in its new path.
 
